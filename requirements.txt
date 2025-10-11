@@ -1,0 +1,16 @@
+pandas
+numpy
+geopandas
+scikit-learn
+lightgbm
+matplotlib
+scipy
+scikit-image
+folium
+Pillow
+PyQt6
+ipywidgets
+ipykernel
+ipython
+jupyter_client
+jupyter_core
