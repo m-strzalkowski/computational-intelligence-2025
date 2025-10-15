@@ -11,8 +11,8 @@
 
 # Function to recreate virtual environment and install dependencies
 reinstall_venv() {
-  rm -rf .hydrovenv
-  python -m venv .hydrovenv
+  rm -rf .venv
+  python -m venv .venv
   source venv.sh
   python -c "import sys; print('sys.prefix:', sys.prefix)"
   echo "Ensure, that srcipt really is in the virtual environment. Press newline to continue"; read
@@ -21,11 +21,11 @@ reinstall_venv() {
   pip install -r requirements.txt
   cp requirements.txt installed_requirements.txt
   deactivate
-  echo "reinstalled .hydrovenv"
+  echo "reinstalled .venv"
 }
 
 # Check if virtual environment exists
-if [ ! -d ".hydrovenv" ]; then
+if [ ! -d ".venv" ]; then
   echo "no venv, installing"
   reinstall_venv
 else

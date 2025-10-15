@@ -1,0 +1,1 @@
+https://github.com/lukas346/wykop_sdk_reloaded/tree/main

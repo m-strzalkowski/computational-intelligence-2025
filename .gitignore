@@ -1,0 +1,6 @@
+installed_requirements.txt
+.venv/
+*/__pycache__/*
+klucz_do_api.txt
+secret_key.txt
+*.ipynb
