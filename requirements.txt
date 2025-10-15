@@ -1,9 +1,11 @@
+beautifulsoup4
 pandas
 numpy
 geopandas
 scikit-learn
 lightgbm
 matplotlib
+selenium
 scipy
 scikit-image
 folium
@@ -15,4 +17,6 @@ ipython
 jupyter_client
 jupyter_core
 jupytext
+openpyxl
+requests
 wykop_sdk_reloaded
