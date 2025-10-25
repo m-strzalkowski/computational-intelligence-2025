@@ -4,3 +4,4 @@ installed_requirements.txt
 klucz_do_api.txt
 secret_key.txt
 *.ipynb
+proxies.txt

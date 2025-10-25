@@ -11,6 +11,10 @@ scikit-image
 folium
 Pillow
 PyQt6
+tqdm
+httpx
+httpx[http2]
+aiofiles
 ipywidgets
 ipykernel
 ipython
