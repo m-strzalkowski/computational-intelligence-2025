@@ -239,12 +239,14 @@ async def fetch_and_parse(client_pool, url, link_id, proxy):
         await client_pool.put(client)
 
 
-def merge_jsonl_files_streamed():
+def merge_jsonl_files_streamed(min_id, max_id):
     """
     Merges all .jsonl files from the posts_dir into a single, final JSON file
     by streaming the data, which uses very little memory.
     """
-    final_output_path = os.path.join(data_dir, "final_combined_results.json")
+    final_output_path = os.path.join(
+        data_dir, f"final_combined_results_{min_id}-{max_id}.json"
+    )
     jsonl_files = glob.glob(os.path.join(posts_dir, "*.jsonl"))
 
     if not jsonl_files:
@@ -362,7 +364,7 @@ async def main():
         print(f"- {path}")
 
     # --- FINAL STEP: MERGE ALL FILES ---
-    merge_jsonl_files_streamed()
+    merge_jsonl_files_streamed(min_id, max_id)
 
     print("\n✅ All operations complete.")
 
