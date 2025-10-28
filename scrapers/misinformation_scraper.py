@@ -1,9 +1,9 @@
-import pandas as pd
 from bs4 import BeautifulSoup
 import requests
 import re
 import datetime
 import os
+import json
 
 years = [str(year) for year in range(2016, 2024)]
 starts = ["0101", "0401", "0701", "1001"]
@@ -22,49 +22,46 @@ for year in years:
             continue
 
         soup = BeautifulSoup(response.content, "html.parser")
-
         posts = soup.find_all("div", style=lambda v: v and "padding-left" in v)
         print("Found", len(posts), "posts")
 
         for post in posts:
-            # Data
+            # Date
             date_tag = post.find("span", title="Data dodania znaleziska")
-            date = date_tag.text.strip() if date_tag else None
+            added_date = date_tag.text.strip() if date_tag else None
 
-            # Tytuł i link (pierwszy <a> po "margin-left: 150px")
+            # Author
+            author_tag = post.find("a", href=re.compile(r"/ludzie/"))
+            author = author_tag.text.strip() if author_tag else None
+
+            # Title and link
             main_block = post.find(
                 "div", style=lambda v: v and "margin-left: 150px" in v
             )
-            title_tag = None
-            link = None
-            title = None
+            title = link = None
             if main_block:
-                title_tag = main_block.find_all("a", href=True)
-                if len(title_tag) > 0:
-                    title = title_tag[0].text.strip()
-                    link = title_tag[0]["href"]
+                a_tags = main_block.find_all("a", href=True)
+                if a_tags:
+                    title = a_tags[0].text.strip()
+                    link = a_tags[0]["href"]
 
-            # Zawartość
+            # Content
             content_tag = post.find("p", class_="text")
-            content = content_tag.text.strip() if content_tag else None
+            description = content_tag.text.strip() if content_tag else None
 
-            # Komunikat
-            message_tag = post.find(
-                "div", style=lambda v: v and "background-color" in v
-            )
-            message = message_tag.text.strip() if message_tag else None
+            # Alerts (previously message)
+            alert_tag = post.find("div", style=lambda v: v and "background-color" in v)
+            alerts = alert_tag.text.strip() if alert_tag else None
 
-            # Tagi
+            # Tags (as list)
             tags_span = post.find("span", title="Tagi")
-            tags = (
-                tags_span.text.strip().replace("#", "").replace("  ", " ").strip()
-                if tags_span
-                else None
-            )
-            if tags:
-                tags = ", ".join(tag.strip() for tag in tags.split() if tag)
+            if tags_span:
+                tags_text = tags_span.text.strip().replace("#", "").strip()
+                tags = [tag.strip() for tag in tags_text.split() if tag]
+            else:
+                tags = []
 
-            # Punkty = Wykopali - Zakopali
+            # Votes
             upvote_tag = post.find("a", href=re.compile("/upvotes/up"))
             downvote_tag = post.find("a", href=re.compile("/upvotes/down"))
 
@@ -74,38 +71,48 @@ for year in years:
                     return int(match.group(1)) if match else 0
                 return 0
 
-            upvotes = extract_number(upvote_tag)
+            votes = extract_number(upvote_tag)
             downvotes = extract_number(downvote_tag)
-            points = upvotes - downvotes
 
+            # Extract ID from link if possible
+            post_id = None
+            if link:
+                match = re.search(r"/link/(\d+)/", link)
+                if match:
+                    post_id = int(match.group(1))
+
+            # Append to list
             data.append(
                 {
-                    "date": date,
+                    "id": post_id,
+                    "url": link,
                     "title": title,
-                    "link": link,
-                    "message": message,
-                    "content": content,
+                    "description": description,
+                    "added_date": added_date,
+                    "author": author,
                     "tags": tags,
-                    "points": points,
+                    "alerts": alerts,
+                    "votes": votes,
+                    "downvotes": downvotes,
                 }
             )
+
         print(f"Total records so far: {len(data)}")
 
-# Konwersja do DataFrame
-df = pd.DataFrame(data)
-print(df.head())
+json_data = {"data": data}
 
+# Prepare save path
 date_str = datetime.datetime.now().strftime("%Y%m%d_%H%M")
-
-# Get the directory of the current script
 script_dir = os.path.dirname(os.path.abspath(__file__))
-# Go one level up and set the data directory
 savedir = os.path.join(os.path.dirname(script_dir), "data")
 
 if not os.path.exists(savedir):
     os.makedirs(savedir)
 
-# Save to CSV in the data directory one level above the script
-csv_path = os.path.join(savedir, f"mssinfo_wykop_posts_{date_str}.csv")
-df.to_csv(csv_path, index=False, encoding="utf-8")
-print(f"Zapisano {len(df)} rekordów do {os.path.basename(csv_path)}")
+json_path = os.path.join(savedir, "mssinfo_wykop_posts.json")
+
+# Save JSON
+with open(json_path, "w", encoding="utf-8") as f:
+    json.dump(json_data, f, ensure_ascii=False, indent=2)
+
+print(f"Saved {len(data)} records to {os.path.basename(json_path)}")
