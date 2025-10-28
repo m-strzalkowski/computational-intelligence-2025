@@ -7,15 +7,17 @@ szukanie w google tak: site:wykop.pl/link "znalezisko" after:2022-01-01 before:2
 
 # Dane z labelami o nieprawdziwej informacji
 
-Dane z oznaczonymi labelami zostały pozyskane ze strony https://wykoppl-informacjanieprawdziwa.surge.sh/ Przy użyciu pliku `scrapers/misinformation_scraper.py` w folderze `scrapers`
+Dane z oznaczonymi labelami zostały pozyskane ze strony https://wykoppl-informacjanieprawdziwa.surge.sh/ Przy użyciu pliku `scrapers/misinformation_scraper.py` w folderze `scrapers`. Dane te zwracane są w postaci pliku `mssinfo_wykop_posts.json`.
 
 Stworzony został też scraper na wykopaliska: `scrapers/wykopalisko_scraper.py`, ale prawdopodobnie nie będzie użyteczny
 
-## Instrukcja działania scrapera do danych z `wykopaliska`
+## Scrapery
+
+### Instrukcja działania scrapera do danych z `wykopaliska`
 
 `scrapers/scraper_config.json` musi zawierać poprawną ścieżkę do pliku wykonawczego firefox, np: `"firefox_path": "C:/Program Files/Mozilla Firefox/firefox.exe"`
 
-## Instrukcja działania scrapera do danych z `głównej`
+### Instrukcja działania scrapera do danych z `głównej`
 
 W folderze głównym projektu powinny znaleźć się dwa pliki:
 
@@ -30,7 +32,7 @@ Praca następnie jest dzielona na dwa skrypty :
 
 2. `scrapers/post_scraper.py` - pobranie wszystkich informacji z postów z pliku `scrapers/homepage_wykop_ids.json` który jest utworzony po zakończeniu działania pliku `scrapers/homepage_scraper.py`
 
-## Instrukcja działania scrapera do danych po `id postu`
+### Instrukcja działania scrapera do danych po `id postu`
 
 Posty mimo, że nie są dostępne na wykopalisku ani na głównej, to są często dostępne poprzez link: `https://wykop.pl/link/{id}`, gdzie `id` to numer postu.
 
@@ -51,6 +53,52 @@ Szczegóły działania:
    Na podstawie powyższych zmiennych dopasowane są parametry scrapera
 
 4. Asynchronicznie pobiera dane i na końcu merguje do pliku `data/final_combined_results.json`
+
+## Dane
+
+Plik `final_combined_results_XID_YID.json` zawiera dane pobrane po `id postu`.
+
+Metodologia: Posty są oznaczone albo jako _zakopane_, albo jako _duplikat_. Przypisanie wag jako labeli:
+
+_Przykładowe wyliczone wartości_:
+
+- **_Manipulacja_** = 1
+- **_Zakopane_** = 0.7
+- Komentarze sugerujące manipulację: `max(1, max_points(comments) / post_points)`: (_pro: jeśli komentarz jest podobnie popularny, dyskredytuje on wiarygodność posta, con: jeśli nie ma dużo punktów np. 1, 2; nietrudno przebić_)
+- Wykorzystanie modelu transformera do wykrycia intencji komentarza (czy komentarz sugeruje manipulację) = 0.3
+- Wykorzystanie modelu transformera do wykrycia manipulacji postu () = 0.1
+
+W początkowych analizach labele zostały losowo wygładzone dodając szum z rozkładu normalnego `std=0.05`.
+
+### Modele PoC
+
+Dane początkowo zostały złożone z archiwum a także z wyszukiwania przez id postów.
+
+_`TfIdfVectorizer`_ z biblioteki `Scikit-learn` przy zbalansowaniu klas podczas uczenia i stratyfikacji z użyciem regresji logistycznej uzyskuje pierwsze wyniki dla dwóch klas:
+
+```
+              precision    recall  f1-score   support
+
+           0      0.899     0.900     0.900      1714
+           1      0.749     0.747     0.748       684
+
+    accuracy                          0.857      2398
+   macro avg      0.824     0.824     0.824      2398
+weighted avg      0.856     0.857     0.856      2398
+```
+
+A po zbalansowaniu do rozmiaru klasy `0`:
+
+```
+              precision    recall  f1-score   support
+
+           0      0.873     0.907     0.890      1715
+           1      0.903     0.868     0.885      1714
+
+    accuracy                          0.888      3429
+   macro avg      0.888     0.888     0.888      3429
+weighted avg      0.888     0.888     0.888      3429
+```
 
 ## Spostrzeżenia:
 

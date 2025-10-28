@@ -5,6 +5,7 @@ geopandas
 scikit-learn
 lightgbm
 matplotlib
+seaborn
 selenium
 scipy
 scikit-image

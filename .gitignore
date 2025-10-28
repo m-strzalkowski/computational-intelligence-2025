@@ -5,3 +5,8 @@ klucz_do_api.txt
 secret_key.txt
 *.ipynb
 proxies.txt
+data/posts/*
+
+# allow notebooks inside the "notebooks" directory
+!notebooks/
+!notebooks/**/*.ipynb
