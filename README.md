@@ -74,30 +74,35 @@ W początkowych analizach labele zostały losowo wygładzone dodając szum z roz
 
 Dane początkowo zostały złożone z archiwum a także z wyszukiwania przez id postów.
 
-_`TfIdfVectorizer`_ z biblioteki `Scikit-learn` przy zbalansowaniu klas podczas uczenia i stratyfikacji z użyciem regresji logistycznej uzyskuje pierwsze wyniki dla dwóch klas:
+Input: `title + description`
+
+_`TfIdfVectorizer`_ z biblioteki `Scikit-learn` przy zbalansowaniu klas podczas uczenia i stratyfikacji z użyciem regresji logistycznej uzyskuje pierwsze wyniki.
+
+#### Dla trzech klas (0, 0.7, 1) - zbalansowane:
 
 ```
               precision    recall  f1-score   support
 
-           0      0.899     0.900     0.900      1714
-           1      0.749     0.747     0.748       684
+           0      0.950     0.856     0.901      1714
+           1      0.925     0.995     0.958      1714
+           2      0.936     0.957     0.946      1714
 
-    accuracy                          0.857      2398
-   macro avg      0.824     0.824     0.824      2398
-weighted avg      0.856     0.857     0.856      2398
+    accuracy                          0.936      5142
+   macro avg      0.937     0.936     0.935      5142
+weighted avg      0.937     0.936     0.935      5142
 ```
 
-A po zbalansowaniu do rozmiaru klasy `0`:
+#### Dla dwóch klas (0, 1) - zbalansowane:
 
 ```
               precision    recall  f1-score   support
 
-           0      0.873     0.907     0.890      1715
-           1      0.903     0.868     0.885      1714
+           0      0.873     0.901     0.887      1715
+           1      0.898     0.869     0.883      1714
 
-    accuracy                          0.888      3429
-   macro avg      0.888     0.888     0.888      3429
-weighted avg      0.888     0.888     0.888      3429
+    accuracy                          0.885      3429
+   macro avg      0.885     0.885     0.885      3429
+weighted avg      0.885     0.885     0.885      3429
 ```
 
 ## Spostrzeżenia:
