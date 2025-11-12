@@ -9,10 +9,14 @@ seaborn
 selenium
 scipy
 scikit-image
+sentence-transformers
+tf-keras # backwards compatibility for sentence-transformers
 folium
 Pillow
 PyQt6
 tqdm
+tensorflow
+xgboost
 httpx
 httpx[http2]
 aiofiles
