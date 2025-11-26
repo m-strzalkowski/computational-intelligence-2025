@@ -1,0 +1,8 @@
+{
+  "emb_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "xgb_n_est": 200,
+  "xgb_depth": 4,
+  "xgb_lr": 0.06254207171432836,
+  "xgb_sub": 0.6528603196527761,
+  "xgb_bal_weights": true
+}

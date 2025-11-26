@@ -1,0 +1,9 @@
+{
+  "tfidf_max_feat": 15000,
+  "tfidf_ngram": 2,
+  "tfidf_min_df": 5,
+  "mlp_layers": 3,
+  "mlp_width": 512,
+  "mlp_alpha": 0.0018285739417557773,
+  "mlp_lr": 0.00022294892713165058
+}

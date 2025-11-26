@@ -1,0 +1,6 @@
+number,value,datetime_start,datetime_complete,duration,params_emb_model,params_lr_C,params_lr_class_weight,state
+0,0.2644257940099669,2025-11-26 22:58:32.270488,2025-11-26 22:58:32.428678,0 days 00:00:00.158190,sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2,0.0019130747474889488,,COMPLETE
+1,0.3388822959524478,2025-11-26 22:58:32.429679,2025-11-26 22:58:32.705703,0 days 00:00:00.276024,sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2,0.01489211738202078,,COMPLETE
+2,0.43554663990317444,2025-11-26 22:58:32.715597,2025-11-26 22:58:33.698812,0 days 00:00:00.983215,sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2,1.8463821355639216,balanced,COMPLETE
+3,0.4252090876660337,2025-11-26 22:58:33.698812,2025-11-26 22:58:35.145025,0 days 00:00:01.446213,sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2,17.260107159651923,balanced,COMPLETE
+4,0.43742332071864815,2025-11-26 22:58:35.145025,2025-11-26 22:58:35.962616,0 days 00:00:00.817591,sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2,0.5265763857575577,balanced,COMPLETE

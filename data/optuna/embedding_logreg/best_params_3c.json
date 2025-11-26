@@ -1,0 +1,5 @@
+{
+  "emb_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "lr_C": 0.5265763857575577,
+  "lr_class_weight": "balanced"
+}

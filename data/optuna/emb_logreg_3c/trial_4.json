@@ -1,0 +1,20 @@
+{
+  "trial_number": 4,
+  "score": 0.4034321676181713,
+  "params": {
+    "emb_model": "sentence-transformers/paraphrase-MiniLM-L6-v2",
+    "lr_C": 14.434295446642862,
+    "lr_class_weight": "balanced"
+  },
+  "history": {
+    "n_iter": [
+      219
+    ],
+    "classes": [
+      0,
+      1,
+      2
+    ],
+    "note": "LogisticRegression does not provide loss curves."
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "tfidf_max_feat": 5000,
+  "tfidf_ngram": 2,
+  "tfidf_min_df": 1,
+  "xgb_n_est": 500,
+  "xgb_depth": 7,
+  "xgb_lr": 0.010886491256441326,
+  "xgb_sub": 0.7702712156938682,
+  "xgb_bal_weights": true
+}

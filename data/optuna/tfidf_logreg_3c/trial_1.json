@@ -1,0 +1,22 @@
+{
+  "trial_number": 1,
+  "score": 0.3164613311516435,
+  "params": {
+    "tfidf_max_feat": 15000,
+    "tfidf_ngram": 1,
+    "tfidf_min_df": 1,
+    "lr_C": 0.037544926491879356,
+    "lr_class_weight": null
+  },
+  "history": {
+    "n_iter": [
+      22
+    ],
+    "classes": [
+      0,
+      1,
+      2
+    ],
+    "note": "LogisticRegression does not provide loss curves."
+  }
+}

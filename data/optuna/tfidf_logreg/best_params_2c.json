@@ -1,0 +1,7 @@
+{
+  "tfidf_max_feat": 15000,
+  "tfidf_ngram": 2,
+  "tfidf_min_df": 2,
+  "lr_C": 0.3290643485166705,
+  "lr_class_weight": "balanced"
+}

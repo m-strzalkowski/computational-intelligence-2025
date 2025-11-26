@@ -1,0 +1,7 @@
+{
+  "emb_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+  "mlp_layers": 3,
+  "mlp_width": 320,
+  "mlp_alpha": 1.095120338643792e-05,
+  "mlp_lr": 0.0001657128276399238
+}

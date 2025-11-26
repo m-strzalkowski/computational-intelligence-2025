@@ -1,0 +1,20 @@
+{
+  "trial_number": 1,
+  "score": 0.42856577807009427,
+  "params": {
+    "emb_model": "thenlper/gte-small",
+    "lr_C": 3.4425996118078173,
+    "lr_class_weight": "balanced"
+  },
+  "history": {
+    "n_iter": [
+      88
+    ],
+    "classes": [
+      0,
+      1,
+      2
+    ],
+    "note": "LogisticRegression does not provide loss curves."
+  }
+}
